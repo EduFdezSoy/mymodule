@@ -10,7 +10,7 @@ class MyModule extends Module
   {
     $this->name = 'mymodule';
     $this->tab = 'front_office_features';
-    $this->version = '0.0.1';
+    $this->version = '0.0.2';
     $this->author = 'Eduardo Fernandez';
     $this->need_instance = 0;
     $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
