@@ -53,4 +53,25 @@ class MyModule extends Module
 
     return true;
     }
+
+    // preparing config page
+    public function getContent()
+    {
+        $output = null;
+
+        if (Tools::isSubmit('Guardar'.$this->name))
+        {
+            $my_module_name = strval(Tools::getValue('MYMODULE_NAME'));
+            if (!$my_module_name
+            || empty($my_module_name)
+            || !Validate::isGenericName($my_module_name))
+                $output .= $this->displayError($this->l('Valor invalido'));
+            else
+            {
+                Configuration::updateValue('MYMODULE_NAME', $my_module_name);
+                $output .= $this->displayConfirmation($this->l('Configuración actualizada'));
+            }
+        }
+        return $output.$this->displayForm();
+    }
 }
