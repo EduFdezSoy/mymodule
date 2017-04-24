@@ -8,7 +8,7 @@ class MyModule extends Module
 {
     public function __construct()
     {
-        $this->name = 'test-module';
+        $this->name = 'test_module';
         $thhis->tab = 'front_office_features';
         $this->version = '0.0.1';
         $this->author = 'Eduardo Fernandez';
