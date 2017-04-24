@@ -10,7 +10,7 @@ class MyModule extends Module
   {
     $this->name = 'mymodule';
     $this->tab = 'front_office_features';
-    $this->version = '0.0.3';
+    $this->version = '0.0.4';
     $this->author = 'Eduardo Fernandez';
     $this->need_instance = 0;
     $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
@@ -36,7 +36,7 @@ class MyModule extends Module
     if (!parent::install() ||
         !$this->registerHook('leftColumn') ||
         !$this->registerHook('header') ||
-        !Configuration::updateValue('MYMODULE_NAME', 'my friend')
+        !Configuration::updateValue('MYMODULE_NAME', 'esta es la frase')
     )
         return false;
 
@@ -89,7 +89,7 @@ class MyModule extends Module
             'input' => array(
                 array(
                     'type' => 'text',
-                    'label' => $this->l('Configuration value'),
+                    'label' => $this->l('Frase chula'),
                     'name' => 'MYMODULE_NAME',
                     'size' => 20,
                     'required' => true
@@ -135,5 +135,29 @@ class MyModule extends Module
         $helper->fields_value['MYMODULE_NAME'] = Configuration::get('MYMODULE_NAME');
 
         return $helper->generateForm($fields_form);
+    }
+
+    // add to Left Column the mymodule.tpl
+    public function hookDisplayLeftColumn($params)
+    {
+    $this->context->smarty->assign(
+        array(
+            'my_module_name' => Configuration::get('MYMODULE_NAME'),
+            'my_module_link' => $this->context->link->getModuleLink('mymodule', 'display')
+        )
+    );
+    return $this->display(__FILE__, 'mymodule.tpl');
+    }
+
+    // same as left column
+    public function hookDisplayRightColumn($params)
+    {
+    return $this->hookDisplayLeftColumn($params);
+    }
+
+    // add to the html head the CSS
+    public function hookDisplayHeader()
+    {
+    $this->context->controller->addCSS($this->_path.'css/mymodule.css', 'all');
     }
 }
