@@ -26,11 +26,31 @@ class MyModule extends Module
         if (!Configuration::get('MYMODULE_NAME'))
             $this->warning = $this->l('No name provided');
     }
-    
+
+    // may link thinks and register configurations
     public function install()
-    {   
-        if (!parent::install())
-            return false;
-        return true;
+    {
+    if (Shop::isFeatureActive())
+        Shop::setContext(Shop::CONTEXT_ALL);
+
+    if (!parent::install() ||
+        !$this->registerHook('leftColumn') ||
+        !$this->registerHook('header') ||
+        !Configuration::updateValue('MYMODULE_NAME', 'my friend')
+    )
+        return false;
+
+    return true;
+    }
+
+    // this may revert all that install() method do
+    public function uninstall()
+    {
+    if (!parent::uninstall() ||
+        !Configuration::deleteByName('MYMODULE_NAME')
+    )
+        return false;
+
+    return true;
     }
 }
