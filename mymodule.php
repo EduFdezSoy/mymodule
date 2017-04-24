@@ -10,7 +10,7 @@ class MyModule extends Module
   {
     $this->name = 'mymodule';
     $this->tab = 'front_office_features';
-    $this->version = '0.0.4';
+    $this->version = '0.0.5';
     $this->author = 'Eduardo Fernandez';
     $this->need_instance = 0;
     $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
@@ -143,7 +143,8 @@ class MyModule extends Module
     $this->context->smarty->assign(
         array(
             'my_module_name' => Configuration::get('MYMODULE_NAME'),
-            'my_module_link' => $this->context->link->getModuleLink('mymodule', 'display')
+            'my_module_link' => $this->context->link->getModuleLink('mymodule', 'display'),
+            'my_module_message' => $this->l('This is a simple text message') // Do not forget to enclose your strings in the l() translation method
         )
     );
     return $this->display(__FILE__, 'mymodule.tpl');
